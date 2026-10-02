@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pixel HTML Academy – learn HTML free</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{--night:#15163a;--sky:#2b2d6e;--sun:#ffd23f;--mint:#5ce1a8;--pink:#ff6b9d;--paper:#f4f0ff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:60px}
+body{margin:0;background:var(--night);color:var(--paper);font:24px/1.3 'VT323',monospace;overflow-x:hidden}
+h1,h2,h3,button,.px{font-family:'Press Start 2P','Courier New',monospace;line-height:1.5}
+h1{font-size:clamp(22px,5vw,44px);margin:0 0 20px;color:var(--sun);text-shadow:4px 4px 0 var(--pink)}
+h2{font-size:clamp(16px,3vw,24px);color:var(--mint);margin:0 0 16px}
+h3{font-size:13px;margin:0 0 8px;color:var(--sun)}
+p{max-width:60ch;margin:0 0 16px}
+section{padding:90px 20px;position:relative}
+.wrap{max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.box{background:var(--sky);box-shadow:0 -4px 0 0 var(--paper),0 4px 0 0 var(--paper),-4px 0 0 0 var(--paper),4px 0 0 0 var(--paper),8px 8px 0 4px #000a}
+.btn{font-size:12px;color:var(--night);background:var(--sun);border:0;padding:14px 18px;cursor:pointer;
+box-shadow:0 -4px 0 0 #000,0 4px 0 0 #000,-4px 0 0 0 #000,4px 0 0 0 #000,inset -4px -4px 0 0 #c9a21c}
+.btn:hover{background:#ffe27a}.btn:active{transform:translate(2px,2px)}
+.btn.alt{background:var(--mint);box-shadow:0 -4px 0 0 #000,0 4px 0 0 #000,-4px 0 0 0 #000,4px 0 0 0 #000,inset -4px -4px 0 0 #2fa97a}
+:focus-visible{outline:4px dashed var(--pink);outline-offset:4px}
+nav{position:fixed;top:0;left:0;right:0;z-index:20;background:var(--night);padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;
+display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid var(--paper)}
+nav a{color:var(--paper);text-decoration:none;font-size:20px;margin-left:16px}
+nav a:hover{color:var(--sun)}
+.logo{font-size:11px;color:var(--sun)}
+#bar{position:fixed;top:0;left:0;height:6px;background:var(--pink);z-index:30;width:0;image-rendering:pixelated}
+#hero{min-height:100vh;display:flex;align-items:center;background:linear-gradient(var(--night) 0,var(--sky) 100%);overflow:hidden}
+.cloud{position:absolute;background:var(--paper);opacity:.14;image-rendering:pixelated;
+box-shadow:24px 0 0 var(--paper),48px 0 0 var(--paper),12px -12px 0 var(--paper),36px -12px 0 var(--paper)}
+.ground{position:absolute;left:0;right:0;bottom:0;height:48px;background:repeating-linear-gradient(90deg,var(--mint) 0 32px,#3fbf8a 32px 64px);border-top:8px solid #2a8a63}
+#sprite{position:fixed;right:14px;top:40px;width:48px;height:48px;image-rendering:pixelated;z-index:25;pointer-events:none;transition:top .15s steps(4)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.steps .box{padding:22px}
+#app{background:var(--sky)}
+.app{display:grid;grid-template-columns:230px 1fr;gap:24px}
+.lessons{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.lessons button{width:100%;text-align:left;font-size:10px;padding:12px;background:var(--night);color:var(--paper);border:0;cursor:pointer;
+box-shadow:0 0 0 4px var(--paper)}
+.lessons button.on{background:var(--pink);color:var(--night)}
+.lessons button.done::after{content:" ★";color:var(--sun)}
+.work{padding:20px;min-width:0}
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+textarea{width:100%;height:210px;background:var(--night);color:var(--mint);border:4px solid var(--paper);font:22px/1.2 'VT323',monospace;padding:10px;resize:vertical}
+iframe{width:100%;height:210px;background:#fff;border:4px solid var(--paper)}
+.label{font-size:10px;color:var(--sun);margin:0 0 6px}
+#msg{min-height:30px;font-size:24px;margin:14px 0 0}
+.ok{color:var(--mint)}.no{color:var(--pink)}
+.score{font-size:11px;color:var(--sun)}
+footer{padding:50px 20px calc(50px + env(safe-area-inset-bottom,0px));text-align:center;background:var(--night);border-top:8px solid var(--paper)}
+.lessons{max-height:560px;overflow:auto;padding:6px}.lessons .grp{font:11px 'Press Start 2P',monospace;color:var(--mint);margin-top:8px}
+@media(max-width:760px){.lessons{max-height:none}.lessons .grp{flex:1 1 100%}.app{grid-template-columns:1fr}.panes{grid-template-columns:1fr}.lessons{flex-direction:row;flex-wrap:wrap}.lessons li{flex:1 1 40%}nav a{display:none}nav a.keep{display:inline}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#sprite{transition:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<canvas id="sprite" width="8" height="8" aria-hidden="true"></canvas>
+<nav><span class="logo px">PIXEL HTML</span><div><a href="#how">How it works</a><a class="keep" href="#app">Start learning</a></div></nav>
+
+<section id="hero">
+  <div class="cloud" data-s=".25" style="top:18%;left:8%;width:12px;height:12px"></div>
+  <div class="cloud" data-s=".5" style="top:38%;left:62%;width:12px;height:12px"></div>
+  <div class="cloud" data-s=".35" style="top:62%;left:28%;width:12px;height:12px"></div>
+  <div class="wrap">
+    <h1>Learn HTML.<br>One pixel at a time.</h1>
+    <p>Free, no sign-up. Type real code, see it come alive, and level up through fifteen lessons, from basic to advanced.</p>
+    <a href="#app"><button class="btn">Start level 1</button></a>
+  </div>
+  <div class="ground"></div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="box"><h3>Read</h3><p>Each lesson explains one HTML tag in a few short lines.</p></div>
+      <div class="box"><h3>Type</h3><p>Edit the code in the editor. The preview updates as you type.</p></div>
+      <div class="box"><h3>Check</h3><p>Press Check code. Get a star when your code does the job.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="app">
+  <div class="wrap">
+    <h2>Learn HTML free</h2>
+    <p class="score" id="score">Stars: 0 / 15</p>
+    <div class="app">
+      <ul class="lessons" id="list"></ul>
+      <div class="box work">
+        <h3 id="ttl"></h3>
+        <p id="txt"></p>
+        <div class="panes">
+          <div><p class="label">Your code</p><textarea id="code" spellcheck="false" aria-label="HTML code editor"></textarea></div>
+          <div><p class="label">Preview</p><iframe id="prev" title="Preview" sandbox></iframe></div>
+        </div>
+        <p style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn" id="chk">Check code</button>
+          <button class="btn alt" id="rst">Reset</button>
+          <button class="btn alt" id="nxt" hidden>Next lesson</button>
+        </p>
+        <p id="msg" role="status"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p class="px" style="font-size:11px;color:var(--sun);max-width:none">GAME OVER? NO. KEEP BUILDING.</p><p style="max-width:none;margin:0">Pixel HTML Academy · free to use</p></footer>
+
+<script>
+const L=[
+{t:"1. Headings",x:"Headings are big titles. Wrap text in <h1> and </h1>. Make a heading that says anything you like.",s:"<!-- write your heading below -->\n",c:c=>/<h1[^>]*>\s*\S[\s\S]*?<\/h1>/i.test(c),h:"Use <h1>Hello</h1>"},
+{t:"2. Paragraphs",x:"Paragraphs hold normal text. Use <p> and </p>. Add a paragraph under the heading.",s:"<h1>My page</h1>\n",c:c=>/<h1[\s\S]*<\/h1>[\s\S]*<p[^>]*>\s*\S[\s\S]*?<\/p>/i.test(c),h:"Add <p>Some text</p> after the heading"},
+{t:"3. Links",x:"Links take you to other pages. Use <a href=\"web address\">text</a>.",s:"<p>Visit my favorite site:</p>\n",c:c=>/<a\s+[^>]*href\s*=\s*["'][^"']+["'][^>]*>\s*\S[\s\S]*?<\/a>/i.test(c),h:"Try <a href=\"https://example.com\">Click me</a>"},
+{t:"4. Lists",x:"Lists group items. Put <li> items inside <ul>. Make a list with at least two items.",s:"<h2>Snacks</h2>\n",c:c=>/<ul[^>]*>(?=[\s\S]*<li[^>]*>[\s\S]*<\/li>[\s\S]*<li[^>]*>[\s\S]*<\/li>)[\s\S]*<\/ul>/i.test(c),h:"<ul><li>Apple</li><li>Bread</li></ul>"},
+{t:"5. Buttons",x:"Buttons are for clicking. Use <button> and </button> with a label inside.",s:"<h1>Level 5</h1>\n",c:c=>/<button[^>]*>\s*\S[\s\S]*?<\/button>/i.test(c),h:"<button>Press me</button>"},
+{g:1,t:'6. Images',x:'Images use <img src="picture.jpg" alt="description">. The alt text describes the picture for people who cannot see it. Add one image with src and alt.',s:'<h2>My photo</h2>\n',c:c=>/<img\s+(?=[^>]*src\s*=\s*["'][^"']+["'])(?=[^>]*alt\s*=\s*["'][^"']*["'])[^>]*>/i.test(c),h:'<img src="cat.jpg" alt="A sleepy cat">'},
+{g:1,t:'7. Bold and italic',x:'Use <strong> for important text and <em> for emphasis. Use both in one paragraph.',s:'<p>Practice makes progress.</p>\n',c:c=>/<strong[^>]*>\s*\S[\s\S]*?<\/strong>/i.test(c)&&/<em[^>]*>\s*\S[\s\S]*?<\/em>/i.test(c),h:'<p><strong>Big</strong> and <em>soft</em></p>'},
+{g:1,t:'8. Tables',x:'Tables show rows and columns. <table> holds <tr> rows, and each row holds <th> or <td> cells. Make a table with two rows.',s:'<h2>Scores</h2>\n',c:c=>/<table[\s\S]*<tr[\s\S]*<t[dh][\s\S]*<tr[\s\S]*<t[dh][\s\S]*<\/table>/i.test(c),h:'<table><tr><th>Name</th></tr><tr><td>Sam</td></tr></table>'},
+{g:1,t:'9. Forms',x:'Forms collect input. Put a <label> and an <input> inside a <form>.',s:'<h2>Join us</h2>\n',c:c=>/<form[\s\S]*<label[\s\S]*<input[\s\S]*<\/form>/i.test(c),h:'<form><label>Name <input></label></form>'},
+{g:1,t:'10. Div and class',x:'A <div> groups things into a block. A class name lets you style it later. Make a div with a class.',s:'<h2>Card</h2>\n',c:c=>/<div\s+[^>]*class\s*=\s*["'][^"']+["'][^>]*>[\s\S]*?<\/div>/i.test(c),h:'<div class="card">Hi</div>'},
+{g:2,t:'11. Page skeleton',x:'Every real page starts with <!DOCTYPE html>, then <html>, a <head> with a <title>, and a <body>. Build the full skeleton.',s:'',c:c=>/<!doctype html>[\s\S]*<html[\s\S]*<head>[\s\S]*<title>\s*\S[\s\S]*<\/title>[\s\S]*<\/head>[\s\S]*<body>[\s\S]*<\/body>[\s\S]*<\/html>/i.test(c),h:'Add DOCTYPE, html, head with title, then body'},
+{g:2,t:'12. Semantic layout',x:'Semantic tags describe the page parts: <header>, <main> and <footer>. Use all three.',s:'<h1>My site</h1>\n',c:c=>['header','main','footer'].every(t=>new RegExp('<'+t+'[^>]*>[\\s\\S]*<\\/'+t+'>','i').test(c)),h:'<header>..</header><main>..</main><footer>..</footer>'},
+{g:2,t:'13. CSS with style',x:'The <style> tag changes how things look. A rule has a selector and braces, like p { color: hotpink; }. Style something.',s:'<p>Make me colorful.</p>\n',c:c=>/<style[^>]*>[\s\S]*\{[^}]*:[^}]*\}[\s\S]*<\/style>/i.test(c),h:'<style>p{color:hotpink;}</style>'},
+{g:2,t:'14. Flexbox',x:'Flexbox lines items up in a row. Give a container display: flex; and put two or more children inside.',s:'<style>\n  .row { }\n</style>\n<div class="row">\n  <div>One</div>\n  <div>Two</div>\n</div>\n',c:c=>/display\s*:\s*flex/i.test(c)&&/<div[\s\S]*<div/i.test(c),h:'.row{display:flex;gap:10px;}'},
+{g:2,t:'15. Final project',x:'Build a profile card. Use a div with a class, a heading, a paragraph, a link, a button, and a style tag.',s:'',c:c=>[/<div\s+[^>]*class\s*=/i,/<h[1-3][^>]*>\s*\S/i,/<p[^>]*>\s*\S/i,/<a\s+[^>]*href/i,/<button[^>]*>\s*\S/i,/<style[^>]*>[\s\S]*\{[\s\S]*\}/i].every(r=>r.test(c)),h:'You need div.class, h1-h3, p, a href, button, and style'}
+];
+const G=["Basic","Intermediate","Advanced"];L.forEach(l=>l.g=l.g||0);
+const $=id=>document.getElementById(id);
+let cur=0,done=new Set(),saved={};
+try{const d=JSON.parse(localStorage.getItem("pxdone")||"[]");d.forEach(i=>done.add(i))}catch(e){}
+function save(){try{localStorage.setItem("pxdone",JSON.stringify([...done]))}catch(e){}}
+function list(){let h="",g=-1;L.forEach((l,i)=>{if(l.g!==g){g=l.g;h+=`<li class="grp">${G[g]}</li>`}h+=`<li><button class="${i==cur?'on':''} ${done.has(i)?'done':''}" data-i="${i}">${l.t}</button></li>`});$("list").innerHTML=h;
+$("score").textContent="Stars: "+done.size+" / "+L.length}
+function load(i){cur=i;$("ttl").textContent=L[i].t;$("txt").textContent=L[i].x;$("code").value=saved[i]??L[i].s;
+$("msg").textContent="";$("nxt").hidden=true;show();list()}
+function show(){$("prev").srcdoc='<body style="font:16px sans-serif;margin:10px">'+$("code").value}
+$("list").onclick=e=>{const b=e.target.closest("button");if(b)load(+b.dataset.i)};
+$("code").oninput=()=>{saved[cur]=$("code").value;show()};
+$("rst").onclick=()=>{delete saved[cur];load(cur)};
+$("nxt").onclick=()=>load(cur+1);
+$("chk").onclick=()=>{const m=$("msg");
+if(L[cur].c($("code").value)){done.add(cur);save();list();
+m.className="ok";m.textContent=done.size==L.length?"All stars collected! You finished every level.":"Nice! Star earned.";
+$("nxt").hidden=cur>=L.length-1}
+else{m.className="no";m.textContent="Not yet. Hint: "+L[cur].h}};
+load(0);
+
+// pixel ghost sprite
+(function(){const map=[".pppppp.","pppppppp","pkppkppp","pppppppp","pppppppp","pppppppp","pp.pp.pp","p.p..p.p"];
+const cv=$("sprite"),g=cv.getContext("2d");
+map.forEach((r,y)=>[...r].forEach((ch,x)=>{if(ch!=".")g.fillStyle=ch=="p"?"#ff6b9d":"#15163a",g.fillRect(x,y,1,1)}))})();
+
+// scroll flow: progress bar, ghost follows, clouds parallax
+const bar=$("bar"),sp=$("sprite"),cl=[...document.querySelectorAll(".cloud")];
+let tick=false;
+function onScroll(){tick=false;const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max:0;
+bar.style.width=(p*100)+"%";bar.style.width=Math.round(p*50)*2+"%";
+sp.style.top=(50+p*(innerHeight-120))+"px";
+cl.forEach(c=>c.style.transform="translateY("+(-scrollY*c.dataset.s)+"px)")}
+addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});
+onScroll();
+</script>
+</body>
+</html>
